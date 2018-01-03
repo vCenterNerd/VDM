@@ -1,0 +1,10 @@
+Get-VMHost |
+Select Name,
+    @{N='InstallationDate';E={
+        $script:esxcli = Get-EsxCli -VMHost $_
+        $epoch = $script:esxcli.system.uuid.get().Split('-')[0]
+
+        [timezone]::CurrentTimeZone.ToLocalTime(([datetime]'1/1/1970').AddSeconds([int]"0x$($epoch)"))}},
+    @{N='UpgradeDate';E={
+        $script:esxcli.software.vib.list()  | where{$_.Name -eq 'esx-base'} | select -ExpandProperty InstallDate
+    }}
