@@ -1,0 +1,36 @@
+#######
+#Edited by Nigel
+#
+#C:\WINDOWS\system32\windowspowershell\v1.0\powershell.exe -PSConsoleFile “C:\Program Files\VMware\Infrastructure\vSphere PowerCLI\vim.psc1? ” &  “C:\Scripts\MyScript.ps1”
+#
+########################################
+ 
+# Select which vCenter you want
+Write-host "Select which vCenter to connect to:"
+Write-Host ""
+Write-Host "1. HOEVDS120.na.xom.com"
+Write-Host "2. DALVDS100.na.xom.com"
+Write-Host "3. PNHVDS100.ap.xom.com"
+ 
+$Ivcenter = read-host “Select a vCenter Server. Enter Number “
+ 
+if ($Ivcenter –eq 1) {
+$vcenter = "HOEVDS120.na.xom.com"
+} elseif ($Ivcenter -eq 2) {
+$vcenter = "DALVDS100.na.xom.com"
+} else {
+$vcenter = "PNHVDS100.ap.xom.com"
+} 
+ 
+write-host ""
+Write-Host "You Picked: "$vcenter
+write-host ""
+start-sleep -s 3
+ 
+# connect to selected vCenter
+connect-viserver $vcenter
+#
+#
+#Get-VMHost | foreach { get-vmhostservice -VMHost $_.name | where {$_.Key -eq "TSM-SSH"} | Start-VMHostService}
+#
+
